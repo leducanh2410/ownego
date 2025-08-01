@@ -1,13 +1,98 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import ShoeSelector from "../ShoeSelector";
+import FlyingImage from "../FlyingImage";
 
-const Info = () => {
+interface InfoProps {
+  onShoeChange: (shoe: any) => void;
+  selectedShoeId: string;
+  onSizeChange: (size: string) => void;
+  selectedSize: string;
+  onAddToCart?: () => void;
+}
+
+const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange, selectedSize, onAddToCart }) => {
+  const [isFlying, setIsFlying] = useState(false);
+  const [flyingImageData, setFlyingImageData] = useState<{
+    imageSrc: string;
+    startPosition: { x: number; y: number };
+    endPosition: { x: number; y: number };
+  } | null>(null);
+  
+  // Xóa addToCartRef, productImageRef không cần thiết
+
+  const shoeNames = {
+    white: "White Samba",
+    black: "Black Samba", 
+    olive: "Olive Samba",
+    brown: "Brown Samba",
+    yellow: "Yellow Samba"
+  };
+
+  const [selectedShoe, setSelectedShoe] = useState({
+    id: selectedShoeId,
+    name: shoeNames[selectedShoeId as keyof typeof shoeNames] || "White Samba",
+    image: "",
+    color: selectedShoeId
+  });
+
+  const handleShoeChange = (shoe: any) => {
+    setSelectedShoe(shoe);
+    onShoeChange(shoe);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (isFlying) return; // Prevent multiple animations
+    
+    // Lấy nút cart-button ở góc phải
+    const cartButton = document.querySelector('.cart-button') as HTMLElement;
+    const productImage = document.querySelector(`.shoe.show`) as HTMLImageElement;
+    
+    if (cartButton && productImage) {
+      const buttonRect = cartButton.getBoundingClientRect();
+      const imageRect = productImage.getBoundingClientRect();
+      
+      setFlyingImageData({
+        imageSrc: productImage.src,
+        startPosition: {
+          x: imageRect.left + imageRect.width / 2 - 40,
+          y: imageRect.top + imageRect.height / 2 - 40
+        },
+        endPosition: {
+          x: buttonRect.left + buttonRect.width / 2 - 40,
+          y: buttonRect.top + buttonRect.height / 2 - 40
+        }
+      });
+      
+      setIsFlying(true);
+    }
+  };
+
+  const handleAnimationComplete = () => {
+    setIsFlying(false);
+    setFlyingImageData(null);
+    if (onAddToCart) {
+      onAddToCart();
+    }
+  };
+
+  useEffect(() => {
+    setSelectedShoe({
+      id: selectedShoeId,
+      name: shoeNames[selectedShoeId as keyof typeof shoeNames] || "White Samba",
+      image: "",
+      color: selectedShoeId
+    });
+  }, [selectedShoeId]);
+
   const shoeName = (
     <div className="shoeName">
       <div>
-        <h1 className="big">Nike Zoom KD 12</h1>
+        <h1 className="big">Adidas Samba</h1>
         <span className="new">new</span>
       </div>
-      <h3 className="small">Men's running shoes</h3>
+      <h3 className="small">{selectedShoe.name}</h3>
     </div>
   );
 
@@ -15,22 +100,9 @@ const Info = () => {
     <div className="description">
       <h3 className="title">Product Info</h3>
       <p className="text">
-        Ensure a comfortable running session by wearing this pair of cool
-        running shoes from Nike.
+        Classic Adidas Samba sneakers with premium materials and timeless design.
+        Perfect for both casual wear and street style.
       </p>
-    </div>
-  );
-
-  const ColorContainer = (
-    <div className="color-container">
-      <h3 className="title">Color</h3>
-      <div className="colors">
-        <span className="color active" primary="#2175f5" color="blue"></span>
-        <span className="color" primary="#f84848" color="red"></span>
-        <span className="color" primary="#29b864" color="green"></span>
-        <span className="color" primary="#ff5521" color="orange"></span>
-        <span className="color" primary="#444" color="black"></span>
-      </div>
     </div>
   );
 
@@ -38,22 +110,30 @@ const Info = () => {
     <div className="size-container">
       <h3 className="title">size</h3>
       <div className="sizes">
-        <span className="size">7</span>
-        <span className="size">8</span>
-        <span className="size active">9</span>
-        <span className="size">10</span>
-        <span className="size">11</span>
+        {["7", "8", "9", "10", "11"].map((size) => (
+          <span
+            key={size}
+            className={`size ${selectedSize === size ? 'active' : ''}`}
+            onClick={() => onSizeChange(size)}
+          >
+            {size}
+          </span>
+        ))}
       </div>
     </div>
   );
 
   const BuySection = (
     <div className="buy-price">
-      <a href="/#" className="buy">
-        <i className="fas fa-shopping-cart"></i>Add to card
+      <a 
+        href="/#" 
+        className="buy" 
+        onClick={handleAddToCart}
+      >
+        <i className="pi pi-shopping-cart"></i>   Add to cart
       </a>
       <div className="price">
-        <i className="fas fa-dollar-sign"></i>
+        <i className="pi pi-dollar"></i>
         <h1>149.99</h1>
       </div>
     </div>
@@ -63,9 +143,18 @@ const Info = () => {
     <div className="info">
       {shoeName}
       {description}
-      {ColorContainer}
+      <ShoeSelector onShoeChange={handleShoeChange} selectedShoeId={selectedShoe.id} />
       {SizeContainer}
       {BuySection}
+      
+      {flyingImageData && (
+        <FlyingImage
+          imageSrc={flyingImageData.imageSrc}
+          startPosition={flyingImageData.startPosition}
+          endPosition={flyingImageData.endPosition}
+          onAnimationComplete={handleAnimationComplete}
+        />
+      )}
     </div>
   );
 };

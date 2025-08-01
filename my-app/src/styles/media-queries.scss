@@ -41,6 +41,29 @@
   .logo {
     width: 70px;
   }
+  
+  .info {
+    .shoe-selector {
+      .shoe-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        
+        .shoe-option {
+          min-width: auto;
+          
+          .shoe-thumbnail {
+            width: 55px;
+            height: 55px;
+          }
+          
+          .shoe-name {
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 490px) {
@@ -92,6 +115,27 @@
           width: 20px;
           height: 20px;
           border-width: 4px;
+        }
+      }
+    }
+
+    .shoe-selector {
+      .shoe-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        
+        .shoe-option {
+          min-width: auto;
+          
+          .shoe-thumbnail {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .shoe-name {
+            font-size: 0.7rem;
+          }
         }
       }
     }
@@ -149,6 +193,24 @@
         justify-content: space-around;
         .size {
           margin: 0;
+        }
+      }
+    }
+    
+    .shoe-selector {
+      .shoe-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        
+        .shoe-option {
+          .shoe-thumbnail {
+            width: 45px;
+            height: 45px;
+          }
+          
+          .shoe-name {
+            font-size: 0.65rem;
+          }
         }
       }
     }

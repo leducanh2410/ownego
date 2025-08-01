@@ -1,19 +1,35 @@
 import React, { Fragment } from "react";
 
-import blue from "../assets/img/samba_white.avif";
-import black from "../assets/img/samba_black.avif";
-import green from "../assets/img/samba_olive.avif";
-import red from "../assets/img/samba_brown.avif";
-import orange from "../assets/img/samba_yellow.avif";
+import sambaWhite from "../assets/img/samba_white.avif";
+import sambaBlack from "../assets/img/samba_black.avif";
+import sambaOlive from "../assets/img/samba_olive.avif";
+import sambaBrown from "../assets/img/samba_brown.avif";
+import sambaYellow from "../assets/img/samba_yellow.avif";
 
-const ProductImages = () => {
+interface ProductImagesProps {
+  selectedShoeId?: string;
+}
+
+const ProductImages: React.FC<ProductImagesProps> = ({ selectedShoeId = "white" }) => {
+  const shoeImages = {
+    white: sambaWhite,
+    black: sambaBlack,
+    olive: sambaOlive,
+    brown: sambaBrown,
+    yellow: sambaYellow
+  };
+
   return (
     <Fragment>
-      <img src={blue} alt="blue shoe" className="shoe show" color="blue" />
-      <img src={red} alt="red shoe" className="shoe" color="red" />
-      <img src={green} alt="green shoe" className="shoe" color="green" />
-      <img src={orange} alt="orange shoe" className="shoe" color="orange" />
-      <img src={black} alt="black shoe" className="shoe " color="black" />
+      {Object.entries(shoeImages).map(([id, image]) => (
+        <img 
+          key={id}
+          src={image} 
+          alt={`${id} shoe`} 
+          className={`shoe ${selectedShoeId === id ? 'show' : ''}`} 
+          color={id} 
+        />
+      ))}
     </Fragment>
   );
 };
