@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useState } from "react";
 import Gradients from "../components/Gradients";
 import ProductImages from "../components/ProductImages";
 import Info from "../components/Info/Info";
