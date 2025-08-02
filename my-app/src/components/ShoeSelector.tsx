@@ -65,7 +65,6 @@ const ShoeSelector: React.FC<ShoeSelectorProps> = ({ onShoeChange, selectedShoeI
 
   return (
     <div className="shoe-selector">
-      <h3 className="title">Select Style</h3>
       <div className="shoe-options">
         {shoeOptions.map((shoe) => (
           <div

@@ -63,6 +63,14 @@
         }
       }
     }
+    
+    .section-header {
+      .toggle-btn {
+        min-width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+      }
+    }
   }
 }
 
@@ -150,6 +158,15 @@
         }
       }
     }
+    
+    .section-header {
+      .toggle-btn {
+        min-width: 26px;
+        height: 26px;
+        font-size: 0.8rem;
+        padding: 3px;
+      }
+    }
   }
   .share {
     width: 35px;
@@ -212,6 +229,15 @@
             font-size: 0.65rem;
           }
         }
+      }
+    }
+    
+    .section-header {
+      .toggle-btn {
+        min-width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+        padding: 2px;
       }
     }
   }

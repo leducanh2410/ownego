@@ -18,6 +18,11 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
     endPosition: { x: number; y: number };
   } | null>(null);
   
+  // Toggle states for each section
+  const [showProductInfo, setShowProductInfo] = useState(true);
+  const [showShoeSelector, setShowShoeSelector] = useState(true);
+  const [showSizeContainer, setShowSizeContainer] = useState(true);
+  
   // Xóa addToCartRef, productImageRef không cần thiết
 
   const shoeNames = {
@@ -98,28 +103,50 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
 
   const description = (
     <div className="description">
-      <h3 className="title">Product Info</h3>
-      <p className="text">
-        Classic Adidas Samba sneakers with premium materials and timeless design.
-        Perfect for both casual wear and street style.
-      </p>
+      <div className="section-header">
+        <h3 className="title">Product Info</h3>
+        <button 
+          className="toggle-btn"
+          onClick={() => setShowProductInfo(!showProductInfo)}
+          aria-label={showProductInfo ? "Hide product info" : "Show product info"}
+        >
+          <i className={`pi ${showProductInfo ? 'pi-chevron-up' : 'pi-chevron-down'}`}></i>
+        </button>
+      </div>
+      {showProductInfo && (
+        <p className="text">
+          Classic Adidas Samba sneakers with premium materials and timeless design.
+          Perfect for both casual wear and street style.
+        </p>
+      )}
     </div>
   );
 
   const SizeContainer = (
     <div className="size-container">
-      <h3 className="title">size</h3>
-      <div className="sizes">
-        {["7", "8", "9", "10", "11"].map((size) => (
-          <span
-            key={size}
-            className={`size ${selectedSize === size ? 'active' : ''}`}
-            onClick={() => onSizeChange(size)}
-          >
-            {size}
-          </span>
-        ))}
+      <div className="section-header">
+        <h3 className="title">size</h3>
+        <button 
+          className="toggle-btn"
+          onClick={() => setShowSizeContainer(!showSizeContainer)}
+          aria-label={showSizeContainer ? "Hide size options" : "Show size options"}
+        >
+          <i className={`pi ${showSizeContainer ? 'pi-chevron-up' : 'pi-chevron-down'}`}></i>
+        </button>
       </div>
+      {showSizeContainer && (
+        <div className="sizes">
+          {["7", "8", "9", "10", "11"].map((size) => (
+            <span
+              key={size}
+              className={`size ${selectedSize === size ? 'active' : ''}`}
+              onClick={() => onSizeChange(size)}
+            >
+              {size}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -143,7 +170,21 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
     <div className="info">
       {shoeName}
       {description}
-      <ShoeSelector onShoeChange={handleShoeChange} selectedShoeId={selectedShoe.id} />
+      <div className="shoe-selector-section">
+        <div className="section-header">
+          <h3 className="title">Select Style</h3>
+          <button 
+            className="toggle-btn"
+            onClick={() => setShowShoeSelector(!showShoeSelector)}
+            aria-label={showShoeSelector ? "Hide style options" : "Show style options"}
+          >
+            <i className={`pi ${showShoeSelector ? 'pi-chevron-up' : 'pi-chevron-down'}`}></i>
+          </button>
+        </div>
+        {showShoeSelector && (
+          <ShoeSelector onShoeChange={handleShoeChange} selectedShoeId={selectedShoe.id} />
+        )}
+      </div>
       {SizeContainer}
       {BuySection}
       
