@@ -3,7 +3,6 @@ import Gradients from "../components/Gradients";
 import ProductImages from "../components/ProductImages";
 import Info from "../components/Info/Info";
 
-import logo from "../assets/img/logo.png";
 
 const Home = () => {
   const [selectedShoeId, setSelectedShoeId] = useState("white");
@@ -50,7 +49,6 @@ const Home = () => {
             <Gradients />
 
             <h1 className="nike">adidas</h1>
-            <img src={logo} alt="logo" className="logo" />
             {/* <a href="/#" className="share">
               <i className="fas fa-share-alt"></i>
             </a> */}
