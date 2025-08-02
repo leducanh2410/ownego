@@ -1,0 +1,344 @@
+.size-guide-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.size-guide-popup {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 800px;
+  width: 95%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.popup-header {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.popup-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+}
+
+.popup-subtitle {
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  font-style: italic;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f5f5f5;
+    color: #000;
+  }
+}
+
+.measurement-guide {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  .guide-title {
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    color: #000;
+    margin: 0 0 12px 0;
+  }
+
+  .guide-description {
+    font-size: 14px;
+    color: #000;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+  }
+
+  .measurement-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+         .measurement-image {
+       flex-shrink: 0;
+       width: 200px;
+       height: 120px;
+       background-color: #f0f0f0;
+       border-radius: 6px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       overflow: hidden;
+
+       img {
+         width: 100%;
+         height: 100%;
+         object-fit: contain;
+       }
+     }
+
+    .measurement-instruction {
+      flex: 1;
+
+      .instruction-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+
+        .step-number {
+          font-weight: bold;
+          color: #000;
+          font-size: 14px;
+          flex-shrink: 0;
+        }
+
+        .step-text {
+          font-size: 14px;
+          color: #000;
+          line-height: 1.4;
+        }
+      }
+    }
+  }
+}
+
+.unit-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.unit-tab {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  transition: all 0.2s;
+  border-radius: 4px 4px 0 0;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+
+  &.active {
+    color: #000;
+    border-bottom: 2px solid #000;
+    background-color: white;
+  }
+}
+
+.size-table-container {
+  .size-table {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+
+      th, td {
+        padding: 12px 16px;
+        text-align: center;
+        border: none;
+        white-space: nowrap;
+        min-width: 80px;
+      }
+
+      th {
+        background-color: #000;
+        color: white;
+        font-weight: 500;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .fixed-column {
+        position: sticky;
+        left: 0;
+        background-color: white;
+        z-index: 5;
+        font-weight: 500;
+        text-align: left;
+        min-width: 100px;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+      }
+
+      th.fixed-column {
+        background-color: #000;
+        z-index: 15;
+      }
+
+      tbody tr {
+        &:nth-child(odd) {
+          background-color: white;
+          
+          .fixed-column {
+            background-color: white;
+          }
+        }
+
+        &:nth-child(even) {
+          background-color: #f8f8f8;
+          
+          .fixed-column {
+            background-color: #f8f8f8;
+          }
+        }
+
+        &:nth-child(odd) td:nth-child(even) {
+          background-color: #f0f0f0;
+        }
+
+        &:nth-child(even) td:nth-child(even) {
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  .scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #666;
+    
+    i {
+      font-size: 10px;
+      color: #999;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .size-guide-popup {
+    padding: 16px;
+    margin: 16px;
+  }
+
+  .popup-title {
+    font-size: 16px;
+  }
+
+  .measurement-guide {
+    padding: 16px;
+    margin-bottom: 20px;
+
+    .guide-title {
+      font-size: 14px;
+    }
+
+    .guide-description {
+      font-size: 13px;
+    }
+
+    .measurement-content {
+      flex-direction: column;
+      gap: 12px;
+
+             .measurement-image {
+         width: 160px;
+         height: 100px;
+         align-self: center;
+       }
+
+      .measurement-instruction {
+        .instruction-step {
+          .step-text {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+
+  .size-table-container {
+    .size-table {
+      table {
+        font-size: 12px;
+
+        th, td {
+          padding: 8px 6px;
+          min-width: 60px;
+        }
+
+        .fixed-column {
+          min-width: 80px;
+        }
+      }
+    }
+
+    .scroll-hint {
+      font-size: 11px;
+      
+      span {
+        display: none;
+      }
+    }
+  }
+} 

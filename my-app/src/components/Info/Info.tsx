@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ShoeSelector from "../ShoeSelector";
 import FlyingImage from "../FlyingImage";
+import SizeGuidePopup from "../SizeGuidePopup";
 
 interface InfoProps {
   onShoeChange: (shoe: any) => void;
@@ -22,6 +23,7 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
   const [showProductInfo, setShowProductInfo] = useState(true);
   const [showShoeSelector, setShowShoeSelector] = useState(true);
   const [showSizeContainer, setShowSizeContainer] = useState(true);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
   
   // Xóa addToCartRef, productImageRef không cần thiết
 
@@ -135,17 +137,27 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
         </button>
       </div>
       {showSizeContainer && (
-        <div className="sizes">
-          {["7", "8", "9", "10", "11"].map((size) => (
-            <span
-              key={size}
-              className={`size ${selectedSize === size ? 'active' : ''}`}
-              onClick={() => onSizeChange(size)}
+        <>
+          <div className="sizes">
+            {["7", "8", "9", "10", "11"].map((size) => (
+              <span
+                key={size}
+                className={`size ${selectedSize === size ? 'active' : ''}`}
+                onClick={() => onSizeChange(size)}
+              >
+                {size}
+              </span>
+            ))}
+          </div>
+          <div className="size-guide-link">
+            <button 
+              className="guide-link"
+              onClick={() => setShowSizeGuide(true)}
             >
-              {size}
-            </span>
-          ))}
-        </div>
+              Guide to choose size
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
@@ -196,6 +208,11 @@ const Info: React.FC<InfoProps> = ({ onShoeChange, selectedShoeId, onSizeChange,
           onAnimationComplete={handleAnimationComplete}
         />
       )}
+      
+      <SizeGuidePopup 
+        isOpen={showSizeGuide}
+        onClose={() => setShowSizeGuide(false)}
+      />
     </div>
   );
 };
